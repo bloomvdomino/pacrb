@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer for the build service of pacrb
+
+[Timer]
+Unit=pacrb-build-repo.service
+OnBootSec=5min
+OnUnitActiveSec=12h
+
+[Install]
+WantedBy=multi-user.target

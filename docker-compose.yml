@@ -1,0 +1,39 @@
+version: '3.7'
+
+services:
+  repo_pacrb-example:
+    image: bloomvdomino/pacrb:latest
+    container_name: repo_pacrb-example
+    volumes:
+      # This is needed to make Arch Linux and aurutils work.
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      # This mounts the the folder where the repo files are stored. Can be served via NGINX etc.
+      - /path/to/repo/folder:/var/cache/pacman/example
+      # This mounts a folder where the repo definition for aurutils is stored. Read the documentatiob for further hints.
+      - /path/to/aurutils/definition/folder:/etc/pacman.d/repos
+      # This mounts the pacman.conf for aurutils. You can add your repo URL to speed up builds if a needed package is already present.
+      - /path/to/pacman-aur.conf:/usr/share/devtools/pacman-aur.conf
+    environment:
+      # Add your timezone here to make Arch Linux properly work.
+      - TZ=Europe/Berlin
+      # Set your repository name. Note that you must use the same name in your repo definition for aurutils.
+      # The used in-container path from volumes must be filled there to. Look at the README.md for further informations.
+      - REPOSITORY_NAME=example
+    cap_add:
+      - SYS_ADMIN
+    restart: unless-stopped
+  repo_nginx-example:
+    image: linuxserver/nginx:latest
+    container_name: repo_nginx-example
+    volumes:
+      # Copy the default config, add autoindex = on to the config and remount it to the container.
+      # For the detailed usage of autoindex consult the NGINX documentation.
+      - /path/to/nginx/site-confs/default:/config/nginx/site-confs/default
+      # Mount the folder from pacrb to serve it.
+      - /path/to/repo/folder:/config/www:ro
+    environment:
+      - PUID=1002
+      - PGID=1002
+    ports:
+      - 80:80
+    restart: unless-stopped

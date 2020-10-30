@@ -1,0 +1,9 @@
+[Unit]
+Description=Build service for pacrb
+
+[Service]
+Type=simple
+User=build
+PassEnvironment=REPOSITORY_NAME XDG_RUNTIME_DIR
+ExecStart=/usr/bin/aur sync -d ${REPOSITORY_NAME} --root /var/cache/pacman/${REPOSITORY_NAME} -c -T -u -n --noview
+StandardError=journal
