@@ -9,7 +9,7 @@ services:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
       # This mounts the the folder where the repo files are stored. Can be served via NGINX etc.
       - /path/to/repo/folder:/var/cache/pacman/example
-      # This mounts a folder where the repo definition for aurutils is stored. Read the documentatiob for further hints.
+      # This mounts a folder where the repo definition for aurutils is stored. Read the documentation for further hints.
       - /path/to/aurutils/definition/folder:/etc/pacman.d/repos
       # This mounts the pacman.conf for aurutils. You can add your repo URL to speed up builds if a needed package is already present.
       - /path/to/pacman-aur.conf:/usr/share/devtools/pacman-aur.conf
