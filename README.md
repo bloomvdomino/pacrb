@@ -8,9 +8,11 @@ Heavily inspired by [aur-build-server](https://github.com/ullebe1/aur-build-serv
 
 ### Initialize the repo
 
+```
 docker exec -it -u root [CONTAINER_NAME] install -d /var/cache/pacman/[REPO_NAME] -o build
 docker exec -it -u root [CONTAINER_NAME] repo-add /var/cache/pacman/[REPO_NAME]/[REPO_NAME].db.tar.gz
 docker exec -it -u root [CONTAINER_NAME] chown -R build:build /var/cache/pacman/[REPO_NAME]
+```
 
 ## Usage
 
